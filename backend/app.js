@@ -49,7 +49,7 @@ app.get("/categoria", async (req, res) =>{
     try{
         const query = "SELECT * FROM categoria";
         const resp = await qy(query);
-        res.send({"Estas son todas las categorias disponibles": resp});
+        res.send(resp);
 
     }
     catch(e){

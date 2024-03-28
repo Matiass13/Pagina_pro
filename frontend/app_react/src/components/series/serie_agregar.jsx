@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 function PostsAgregar(props) {
@@ -8,6 +8,10 @@ function PostsAgregar(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [err, setErr] = React.useState("");
+  const listado = useSelector((state) => state.series);
+
+
+
   const handleNombreChange = (e) => {
     const newForm = JSON.parse(JSON.stringify(form));
     newForm.nombre = e.target.value;
@@ -33,11 +37,15 @@ function PostsAgregar(props) {
       if (!form.nombre || !form.categoria){
         throw new Error("Faltan datos")
       }
+      const nombre_existe = listado.find((item) => item.nombre == form.nombre);
+      if (nombre_existe != null) {
+        throw new Error("El nombre de la serie ya existe");
+      }
+      console.log(nombre_existe);
       const serverResponse = await axios.post(`https://localhost:3000/serie`, form);
       dispatch({ type: 'AGREGAR_UNA_SERIE', serie: serverResponse.data });
       navigate('/series');
     } catch (e) {
-      
       setErr(e.message);
       console.error(err);
   

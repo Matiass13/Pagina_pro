@@ -22,6 +22,10 @@ function App() {
           throw new Error("error al conectarse con el servidor");
         }
       dispatch({type: "AGREGAR_LISTADO_SERIES", listado:[...respuesta.data]})
+      
+      const respuestacate = await axios.get("http://127.0.0.1:3000/categoria");
+      dispatch({type: "AGREGAR_LISTADO_CATE", listado_cate:[...respuestacate.data]});
+      
       }catch(e){
         console.error(e.message);
         return({"Error":e.message});

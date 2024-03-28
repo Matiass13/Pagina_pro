@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 function PostsListado() {
   const dispatch = useDispatch();
-  const listado = useSelector((state) => state.series);
+  const listado_series = useSelector((state) => state.series);
+  const listadocate = useSelector((state) => state.categorias);
 
   const handleBorrarPosteo = async (idABorrar) => {
     // Hacer peticion al servidor y si la peticion es correcta borrar del store
@@ -18,14 +19,14 @@ function PostsListado() {
   };
 
   return (
-    console.log(listado),
+    console.log(listadocate),
     <>
     <Link to="/">Volver a la pagina principal</Link>
       <h1>Listado de Posteos</h1>
        <p>Ejemplo de paso de parámetros por medio de una ruta/URL a otro componente</p>
       <Link to='/serie/new'>Agregar una serie</Link> 
       <ul>
-        {listado.map((unPost) => (
+        {listado_series.map((unPost) => (
           <li key={unPost.id}>
             <Link to={'/serie/view/' + unPost.id}>{unPost.nombre}</Link>{' '}
             <button onClick={() => handleBorrarPosteo(unPost.id)}>Borrar</button>
